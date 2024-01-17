@@ -1,0 +1,37 @@
+<label for="meuSelect">Escolha uma opção:</label>
+<select id="meuSelect">
+    <option value="1">Opção 1</option>
+    <option value="2">Opção 2</option>
+    <option value="3">Opção 3</option>
+    <!-- Outras opções... -->
+</select>
+
+<label for="outroSelect">Escolha dependente:</label>
+<select id="outroSelect" disabled>
+    <!-- Opções que serão carregadas dinamicamente -->
+</select>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#meuSelect').change(function () {
+            var valorSelecionado = $(this).val();
+
+            $.ajax({
+                url: '@Url.Action("ObterOpcoes", "Meu")', // Ação que retorna as opções para o segundo select
+                type: 'GET',
+                data: { opcao: valorSelecionado }, // Envia o valor selecionado
+                success: function (opcoes) {
+                    $('#outroSelect').empty().removeAttr('disabled');
+                    $.each(opcoes, function (index, opcao) {
+                        $('#outroSelect').append(new Option(opcao.texto, opcao.valor));
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

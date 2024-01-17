@@ -1,0 +1,29 @@
+<label for="meuSelect">Escolha uma opção:</label>
+<select id="meuSelect">
+    <option value="1">Opção 1</option>
+    <option value="2">Opção 2</option>
+    <option value="3">Opção 3</option>
+    <!-- Adicione mais opções conforme necessário -->
+</select>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#meuSelect').change(function () {
+            var valorSelecionado = $(this).val();
+
+            $.ajax({
+                url: '@Url.Action("Acao2", "Meu")', // Substitua 'Meu' pelo nome do seu controlador
+                type: 'GET',
+                data: { opcao: valorSelecionado }, // Envia o valor selecionado
+                success: function (result) {
+                    // Faça algo com o resultado
+                    console.log(result);
+                },
+                error: function (error) {
+                    // Trate erros aqui
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
